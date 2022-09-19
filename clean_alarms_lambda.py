@@ -34,9 +34,11 @@ def lambda_handler(event, context):
         for print_alarms_delete in DELETE_ALARM_NAME:
             print (print_alarms_delete)
 
-        delete_Alarm = cloudwatch.delete_alarms(
-            AlarmNames=DELETE_ALARM_NAME
-        )
+        for i in range((len(DELETE_ALARM_NAME)//100)+1):
+
+            delete_Alarm = cloudwatch.delete_alarms(
+                AlarmNames=DELETE_ALARM_NAME[i*100:(1+i)*100]
+            )
 
         body="\n Alarmas huérfanas limpadas." + str(DELETE_ALARM_NAME)
         print (body)
